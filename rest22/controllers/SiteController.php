@@ -11,32 +11,31 @@ class SiteController extends BaseController {
         $behaviors = parent::behaviors();
         $behaviors['authenticator']['only'] = ['logout'];
         $behaviors['verbs'] = [
-        'class' => VerbFilter::className(),
-        'actions' => [
-        'logout' => ['post'],
-        'login' => ['post'],
-        ],
+            'class' => VerbFilter::className(),
+            'actions' => [
+                'logout' => ['post'],
+                'login' => ['post'],
+            ],
         ];
-        return $behaviors;  
+        return $behaviors;
     }
+
     public function actionIndex() {
         return 'API for Shedule';
     }
     public function actionLogin () {
         $model = new LoginForm();
-$model->load(Yii::$app->request->bodyParams, '');
-if ($token = $model->auth()) {
-return $token;
-} else {
-throw new UnauthorizedHttpException('Unauthorized
-user');
-}
+        $model->load(Yii::$app->request->bodyParams, '');
+        if ($token = $model->auth()) {
+            return $token;
+        } else {
+            throw new UnauthorizedHttpException('Unauthorized user');
+        }
     }
     public function actionLogout() {
         if (Yii::$app->user->identity->logout()) {
             return ['message' => 'logout success'];
-            }
-            throw new UnauthorizedHttpException('Unauthorized
-            user'); 
+        }
+        throw new UnauthorizedHttpException('Unauthorized user');
     }
 }

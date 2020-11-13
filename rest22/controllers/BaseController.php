@@ -7,6 +7,9 @@ use yii\web\Response;
 use yii\filters\auth\QueryParamAuth;
 
 class BaseController extends Controller {
+
+    public $serializer = [ 'class' => 'yii\rest\Serializer',  'collectionEnvelope' => 'items', ];
+
     public function behaviors() {
         return [
             'contentNegotiator' => [
@@ -22,6 +25,6 @@ class BaseController extends Controller {
             ],
             ];
     }
-}
 
+}
 ?>
