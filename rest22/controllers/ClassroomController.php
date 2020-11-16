@@ -1,5 +1,7 @@
 <?php
+
 namespace app\controllers;
+
 use yii\data\ActiveDataProvider;
 use app\models\Classroom;
 use Yii;
@@ -35,21 +37,22 @@ class ClassroomController extends BaseController
     public function saveModel($classroom)
     {
         if ($classroom->loadAndSave(Yii::$app->getRequest()->getBodyParams())) {
-        $response = Yii::$app->getResponse();
-        $response->setStatusCode(201);
-        $response->getHeaders()->set('Location', Url::toRoute(['view', 'id' => $classroom->getPrimaryKey()], true));
-} elseif (!$classroom->hasErrors()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+            $response->getHeaders()->set('Location',
+            Url::toRoute(['view', 'id' => $classroom->getPrimaryKey()], true));
+        } 
+        elseif (!$classroom->hasErrors()) {
             throw new
             ServerErrorHttpException(serialize($classroom->getErrors()));
-        }
+        }  
         return $classroom;
     }
-
     public function findModel($id)
     {
         $classroom = Classroom::findOne($id);
         if ($classroom === null) {
-            throw new NotFoundHttpException("Special with ID $id not found");
+            throw new NotFoundHttpException("Classroom with ID $id not found");
         }
         return $classroom;
     }
